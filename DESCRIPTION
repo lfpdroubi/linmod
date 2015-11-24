@@ -2,8 +2,8 @@ Package: linmod
 Title: Linear Regression
 Version: 0.0.0.9000
 Authors@R: person("Friedrich", "Leisch", email = "Friedrich.Leisch@R-project.org", role = c("aut", "cre"))
-Description: This is a demo package for the tutorial  "Creating R
-  Packages" to compstat 2008 in Porto.
+Description: This is a demo package for the tutorial  "Creating R Packages"
+  to compstat 2008 in Porto.
 Depends: R (>= 3.2.2)
 License: GPL-2
 LazyData: true
