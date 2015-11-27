@@ -16,7 +16,37 @@ linmodEst <- function(x, y)
        df = df)
 }
 
+#' Linear Regression
+#' 
+#' Fit a linear regression model.
+#' 
+#' 
+#' @aliases linmod linmod.default linmod.formula print.linmod predict.linmod
+#' summary.linmod print.summary.linmod
+#' @param x a numeric design matrix for the model.
+#' @param y a numeric vector of responses.
+#' @param formula a symbolic description of the model to be fit.
+#' @param data an optional data frame containing the variables in the model.
+#' @param object an object of class \code{"linmod"}, i.e., a fitted model.
+#' @param \dots not used.
+#' @return An object of class \code{logreg}, basically a list including
+#' elements \item{coefficients}{ a named vector of coefficients } \item{vcov}{
+#' covariance matrix of coefficients } \item{fitted.values}{ fitted values }
+#' \item{residuals}{ residuals }
+#' @author Friedrich Leisch
+#' @keywords regression
+#' @examples
+#' 
+#' data(cats, package="MASS")
+#' mod1 <- linmod(Hwt~Bwt*Sex, data=cats)
+#' mod1
+#' summary(mod1)
+#' 
+#' @export
 linmod <- function(x, ...) UseMethod("linmod")
+
+#' @rdname linmod
+#' @export
 
 linmod.default <- function(x, y, ...)
 {
@@ -30,6 +60,23 @@ linmod.default <- function(x, y, ...)
   est
 }
 
+#' @rdname linmod
+#' @export
+
+linmod.formula <- function(formula, data=list(), ...)
+{
+  mf <- model.frame(formula = formula, data = data)
+  x <- model.matrix(attr(mf, "terms"), data=mf)
+  y <- model.response(mf)
+  est <- linmod.default(x, y, ...)
+  est$call <- match.call()
+  est$formula <- formula
+  est
+}
+
+#' @rdname linmod
+#' @export
+
 print.linmod <- function(x, ...)
 {
   cat("Call:\n")
@@ -37,6 +84,9 @@ print.linmod <- function(x, ...)
   cat("\nCoefficients:\n")
   print(x$coefficients)
 }
+
+#' @rdname linmod
+#' @export
 
 summary.linmod <- function(object, ...)
 {
@@ -52,21 +102,13 @@ summary.linmod <- function(object, ...)
   res
 }
 
+#' @rdname linmod
+#' @export
+
 print.summary.linmod <- function(x, ...)
 {
   cat("Call:\n")
   print(x$call)
   cat("\n")
-  printCoefmat(x$coefficients, P.value=TRUE, has.Pvalue=TRUE)
-}
-
-linmod.formula <- function(formula, data=list(), ...)
-{
-  mf <- model.frame(formula = formula, data = data)
-  x <- model.matrix(attr(mf, "terms"), data=mf)
-  y <- model.response(mf)
-  est <- linmod.default(x, y, ...)
-  est$call <- match.call()
-  est$formula <- formula
-  est
+  printCoefmat(x$coefficients, P.values=TRUE, has.Pvalue=TRUE)
 }
