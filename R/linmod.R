@@ -60,7 +60,7 @@ linmod.default <- function(x, y, ...)
 }
 
 #' @rdname linmod
-#' @export
+#' @export linmod.formula
 
 linmod.formula <- function(formula, data=list(), ...)
 {
