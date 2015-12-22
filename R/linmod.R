@@ -20,7 +20,6 @@ linmodEst <- function(x, y)
 #' 
 #' Fit a linear regression model.
 #' 
-#' 
 #' @aliases linmod linmod.default linmod.formula print.linmod predict.linmod
 #' summary.linmod print.summary.linmod
 #' @param x a numeric design matrix for the model.
